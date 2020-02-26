@@ -3,8 +3,10 @@ title: Appium Desktop学习笔记1
 date: 2020-02-25 20:30:22
 tags:
 ---
-appium是一款开源的移动端自动化测试框架, appium可以测试Android或者iOS平台的原生应用，web浏览器应用以及混合应用。appium在设计时认为不应该让移动端自动化测试限定在某种语言和某个具体的框架中，也就是说任何人都可以使用自己最熟悉最顺手的语言以及框架来做移动端自动化测试。因此appium选择了client-server的设计模式。只要client能够发送http请求给server，那么client用任何语言来实现都是可以的，因此appium做到了支持多语言。其次appium扩展了webdriver的协议，没有重新去实现一套webdriver。这样的好处是以前的webdriver api能够直接被继承过来，各种语言的binding都可以拿来就用，省去了为每种语言开发一个client的工作量。
+appium是一款开源的移动端自动化测试框架, appium可以测试Android或者iOS平台的原生应用，web浏览器应用以及混合应用。appium在设计时认为不应该让移动端自动化测试限定在某种语言和某个具体的框架中，也就是说任何人都可以使用自己最熟悉最顺手的语言以及框架来做移动端自动化测试。
 <!--more-->
+因此appium选择了client-server的设计模式。只要client能够发送http请求给server，那么client用任何语言来实现都是可以的，因此appium做到了支持多语言。其次appium扩展了webdriver的协议，没有重新去实现一套webdriver。这样的好处是以前的webdriver api能够直接被继承过来，各种语言的binding都可以拿来就用，省去了为每种语言开发一个client的工作量。
+
 appium的核心其实是一个暴露了一系列REST API的server。这个server的功能其实很简单：监听一个端口，然后接收由client发送来的command。翻译这些command，把这些command转成移动设备可以理解的形式发送给移动设备，然后移动设备执行完这些command后把执行结果返回给appium server，appium server再把执行结果返回给client。
 
 ### 一 安装appium desktop
