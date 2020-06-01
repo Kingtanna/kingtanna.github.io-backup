@@ -6,4 +6,8 @@ type: "日常"
 
 敏捷实践
 测试
+Appium
+Gatling
+日常
+TestNG
 
