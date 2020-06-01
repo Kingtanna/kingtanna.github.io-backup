@@ -1,7 +1,7 @@
 ---
-title: Appium学习笔记3-基于Page Object的测试实例改进
+title: 基于Page Object的Appium测试实例改进
 date: 2020-03-27 19:37:26
-tags:
+tags: Appium
 ---
 前段时间我在极客时间上订阅了Mobile测试的相关课程，在学习了一些基础知识后，跟着老师以及网上的教程搭建了基于MAC的appium运行环境，并在此基础上使用appium的record功能生成了测试Android app的第一个例子。由于实际中record功能使用的并不多，因此我跟着视频进行了下一步的测试改进。
 <!--more-->

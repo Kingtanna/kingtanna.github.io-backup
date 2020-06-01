@@ -1,7 +1,7 @@
 ---
-title: Appium Desktop学习笔记1
+title: 基于MAC的Appium Desktop环境搭建
 date: 2020-02-25 20:30:22
-tags:
+tags: Appium
 ---
 appium是一款开源的移动端自动化测试框架, appium可以测试Android或者iOS平台的原生应用，web浏览器应用以及混合应用。appium在设计时认为不应该让移动端自动化测试限定在某种语言和某个具体的框架中，也就是说任何人都可以使用自己最熟悉最顺手的语言以及框架来做移动端自动化测试。
 <!--more-->
@@ -25,12 +25,12 @@ appium的核心其实是一个暴露了一系列REST API的server。这个server
 
 #### 2.安装Appium  
 * go to https://github.com/appium/appium-desktop/releases/tag/v1.15.1 并且下载合适的版本。这里以下载的是mac版本的appium。 
-<img src="Appium Desktop学习笔记1/appium下载.png" width="50%" height="50%">  
+<img src="基于MAC的Appium Desktop环境搭建/appium下载.png" width="50%" height="50%">  
 * 安装下载好的安装包,过程较为简单，不赘述。  
 * 启动appium desktop，会看到如下界面：
-<img src="Appium Desktop学习笔记1/appium界面.png" width="50%" height="50%">  
+<img src="基于MAC的Appium Desktop环境搭建/appium界面.png" width="50%" height="50%">  
 点击启动server后会出现server界面：  
-<img src="Appium Desktop学习笔记1/appium server.png" width="50%" height="50%">  
+<img src="基于MAC的Appium Desktop环境搭建/appium server.png" width="50%" height="50%">  
 
 #### 3.安装Appium-Doctor
 
@@ -38,7 +38,7 @@ appium的核心其实是一个暴露了一系列REST API的server。这个server
 
 遇到问题：权限不够无法安装。  
 
-<img src="Appium Desktop学习笔记1/appium_doctor安装问题.png" width="50%" height="50%">   
+<img src="基于MAC的Appium Desktop环境搭建/appium_doctor安装问题.png" width="50%" height="50%">   
  
 解决办法如下：使用管理员权限来运行该命令。
 
@@ -47,7 +47,7 @@ appium的核心其实是一个暴露了一系列REST API的server。这个server
 #### 4.运行Appium-Doctor
 打开terminal，运行appium-doctor  
 
-<img src="Appium Desktop学习笔记1/appium_desktop运行结果.png" width="50%" height="50%">  
+<img src="基于MAC的Appium Desktop环境搭建/appium_desktop运行结果.png" width="50%" height="50%">  
 
 从运行结果中看到需要解决三个问题： 
 
@@ -76,7 +76,7 @@ appium的核心其实是一个暴露了一系列REST API的server。这个server
 #### 5.配置appium
 打开appium，点击edit configurations，把之前配置好的JAVA_HOME和ANDROID_HOME输入并保存
 
-<img src="Appium Desktop学习笔记1/Appium configurations.png" width="50%" height="50%"> 
-<img src="Appium Desktop学习笔记1/Appium configurations2.png" width="50%" height="50%"> 
+<img src="基于MAC的Appium Desktop环境搭建/Appium configurations.png" width="50%" height="50%"> 
+<img src="基于MAC的Appium Desktop环境搭建/Appium configurations2.png" width="50%" height="50%"> 
 
 此时appium在MAC上就装好了。
