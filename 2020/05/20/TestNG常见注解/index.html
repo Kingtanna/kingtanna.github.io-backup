@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="TestNG是一个开源的自动化测试框架, NG表示Next Generation。TestNG类似于JUnit（尤其是JUnit4），但它不是JUnit的扩展。它的灵感来自JUnit但是设计优于JUnit，尤其是在测试集成类时。TestNG有强大的注解功能，下面将利用小demo来展示常用的注解及用法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TestNG常见注解">
+<meta property="og:url" content="http://yoursite.com/2020/05/20/TestNG%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Kingtanna的秘密花园">
+<meta property="og:description" content="TestNG是一个开源的自动化测试框架, NG表示Next Generation。TestNG类似于JUnit（尤其是JUnit4），但它不是JUnit的扩展。它的灵感来自JUnit但是设计优于JUnit，尤其是在测试集成类时。TestNG有强大的注解功能，下面将利用小demo来展示常用的注解及用法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-05-20T03:30:33.000Z">
+<meta property="article:modified_time" content="2020-06-05T02:10:21.638Z">
+<meta property="article:author" content="Kingtanna">
+<meta property="article:tag" content="TestNG">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/20/TestNG%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>TestNG常见注解 | Kingtanna的秘密花园</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Kingtanna的秘密花园" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Kingtanna的秘密花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">欢迎来到我的世界</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/TestNG%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/test.jpg">
+      <meta itemprop="name" content="Kingtanna">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kingtanna的秘密花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TestNG常见注解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-20 11:30:33" itemprop="dateCreated datePublished" datetime="2020-05-20T11:30:33+08:00">2020-05-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-05 10:10:21" itemprop="dateModified" datetime="2020-06-05T10:10:21+08:00">2020-06-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>TestNG是一个开源的自动化测试框架, NG表示Next Generation。TestNG类似于JUnit（尤其是JUnit4），但它不是JUnit的扩展。它的灵感来自JUnit但是设计优于JUnit，尤其是在测试集成类时。TestNG有强大的注解功能，下面将利用小demo来展示常用的注解及用法。</p>
+<a id="more"></a>
+
+<p><strong>@Test：</strong> 最基本的注解，用来把方法标记为测试的一部分</p>
+<p><strong>@BeforeSuite：</strong> 对于套件测试，在此套件中的所有测试执行之前运行，仅运行一次<br><strong>@AfterSuite：</strong> 对于套件测试，在此套件中的所有测试执行之后运行，仅运行一次<br>例子:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class AnnotationSuite &#123;</span><br><span class="line">    @Test</span><br><span class="line">    public void test1() &#123;System.out.print(&quot;test1运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test2() &#123;System.out.print(&quot;test2运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test3()&#123;System.out.print(&quot;test3运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @BeforeSuite</span><br><span class="line">    public void beforeSuite() &#123;System.out.println(&quot;BeforeSuite运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @AfterSuite</span><br><span class="line">    public void afterSuite()&#123;System.out.println(&quot;AfterSuite运行&quot;);&#125;</span><br><span class="line">&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>对应的XML文件如下: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE suite SYSTEM &quot;http:&#x2F;&#x2F;testng.org&#x2F;testng-1.0.dtd&quot; &gt;</span><br><span class="line">&lt;suite name&#x3D;&quot;testSuite&quot;&gt;</span><br><span class="line">    &lt;test name&#x3D;&quot;annotation1&quot;&gt;</span><br><span class="line">        &lt;classes&gt;</span><br><span class="line">            &lt;class name&#x3D;&quot;org.example.annotation.AnnotationSuite&quot;&gt;</span><br><span class="line">                &lt;methods&gt;</span><br><span class="line">                &lt;&#x2F;methods&gt;</span><br><span class="line">            &lt;&#x2F;class&gt;</span><br><span class="line">        &lt;&#x2F;classes&gt;</span><br><span class="line">    &lt;&#x2F;test&gt;</span><br><span class="line">&lt;&#x2F;suite&gt;</span><br></pre></td></tr></table></figure>  
+
+<p>结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BeforeSuite运行</span><br><span class="line">test1运行</span><br><span class="line">test2运行</span><br><span class="line">test3运行</span><br><span class="line">AfterSuite运行</span><br></pre></td></tr></table></figure>
+
+<p><strong>@BeforeTest：</strong> 对于套件测试，在属于<test>标签内的所有类的测试方法执行之前运行<br><strong>@AfterTest：</strong> 对于套件测试，在属于<test>标签内的所有类的测试方法都已执行完之后运行<br>例子：   </test></test></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class AnnotationTest &#123;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test1() &#123;System.out.print(&quot;test1运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test2() &#123;System.out.print(&quot;test2运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test3()&#123;System.out.print(&quot;test3运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @BeforeTest</span><br><span class="line">    public void beforeTest()&#123;System.out.println(&quot;BeforeTest运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @AfterTest</span><br><span class="line">    public void afterTest()&#123; System.out.println(&quot;AfterTest运行&quot;);&#125;</span><br></pre></td></tr></table></figure>   
+
+<p>对应的XML文件为  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE suite SYSTEM &quot;http:&#x2F;&#x2F;testng.org&#x2F;testng-1.0.dtd&quot; &gt;</span><br><span class="line">&lt;suite name&#x3D;&quot;testTest&quot;&gt;</span><br><span class="line">    &lt;test name&#x3D;&quot;annotationTest1&quot;&gt;</span><br><span class="line">        &lt;classes&gt;</span><br><span class="line">            &lt;class name&#x3D;&quot;org.example.annotation.AnnotationTest&quot;&gt;</span><br><span class="line">                &lt;methods&gt;</span><br><span class="line">                    &lt;include name&#x3D;&quot;test1&quot;&#x2F;&gt;</span><br><span class="line">                    &lt;include name&#x3D;&quot;test3&quot;&#x2F;&gt;</span><br><span class="line">                &lt;&#x2F;methods&gt;</span><br><span class="line">            &lt;&#x2F;class&gt;</span><br><span class="line">        &lt;&#x2F;classes&gt;</span><br><span class="line">    &lt;&#x2F;test&gt;</span><br><span class="line"></span><br><span class="line">        &lt;test name&#x3D;&quot;annotationTest2&quot;&gt;</span><br><span class="line">            &lt;classes&gt;</span><br><span class="line">                &lt;class name&#x3D;&quot;org.example.annotation.AnnotationTest&quot;&gt;</span><br><span class="line">                    &lt;methods&gt;</span><br><span class="line">                        &lt;include name&#x3D;&quot;test2&quot;&#x2F;&gt;</span><br><span class="line">                    &lt;&#x2F;methods&gt;</span><br><span class="line">                &lt;&#x2F;class&gt;</span><br><span class="line">            &lt;&#x2F;classes&gt;</span><br><span class="line">        &lt;&#x2F;test&gt;</span><br><span class="line">&lt;&#x2F;suite&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>   
+
+<p>运行结果为:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BeforeTest运行</span><br><span class="line">test1运行</span><br><span class="line">test3运行</span><br><span class="line">AfterTest运行</span><br><span class="line"></span><br><span class="line">BeforeTest运行</span><br><span class="line">test2运行</span><br><span class="line">AfterTest运行</span><br></pre></td></tr></table></figure>   
+
+<p>注意：从运行结果可以看到@BeforeTest和@AfterTest针对的是xml文件中的test标签来决定是否运行，而不是测试用例上面的@test。因此如果有多个测试用例，但在xml文件中只有一个test标签，那么@BeforeTest和@AfterTest也只分别运行一次。</p>
+<p><strong>@BeforeClass：</strong> 在调用当前类之前运行<br><strong>@AfterClass：</strong> 在调用当前类之后运行<br>例子：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ublic class AnnotationClass &#123;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test1() &#123;System.out.print(&quot;test1运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test2() &#123;System.out.print(&quot;test2运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test3()&#123;System.out.print(&quot;test3运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @BeforeClass</span><br><span class="line">    public void beforeClass()&#123;System.out.println(&quot;BeforeClass运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @AfterClass</span><br><span class="line">    public void afterClass()&#123;System.out.println(&quot;AfterClass运行&quot;);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  
+
+<p>对应的XML文件为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE suite SYSTEM &quot;http:&#x2F;&#x2F;testng.org&#x2F;testng-1.0.dtd&quot; &gt;</span><br><span class="line">&lt;suite name&#x3D;&quot;testClass&quot;&gt;</span><br><span class="line">    &lt;test name&#x3D;&quot;annotationClass1&quot;&gt;</span><br><span class="line">        &lt;classes&gt;</span><br><span class="line">            &lt;class name&#x3D;&quot;org.example.annotation.AnnotationClass&quot;&gt;</span><br><span class="line">                &lt;methods&gt;</span><br><span class="line">                &lt;&#x2F;methods&gt;</span><br><span class="line">            &lt;&#x2F;class&gt;</span><br><span class="line">        &lt;&#x2F;classes&gt;</span><br><span class="line">    &lt;&#x2F;test&gt;</span><br><span class="line">&lt;&#x2F;suite&gt;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+
+<p>运行结果：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BeforeClass运行</span><br><span class="line">test1运行</span><br><span class="line">test2运行</span><br><span class="line">test3运行</span><br><span class="line">AfterClass运行  </span><br></pre></td></tr></table></figure> 
+
+<p><strong>@BeforeMethod：</strong> 在每个测试方法执行之前都会运行<br><strong>@AfterMethod：</strong> 在每个测试方法执行之后都会运行<br>例子：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class AnnotationMethod &#123;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test1() &#123; System.out.print(&quot;test1运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test2() &#123;System.out.print(&quot;test2运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void test3()&#123;System.out.print(&quot;test3运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @BeforeMethod</span><br><span class="line">    public void beforeMethod()&#123;System.out.println(&quot;BeforeMethod运行&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @AfterMethod</span><br><span class="line">    public void afterMethod()&#123;System.out.println(&quot;AfterMethod运行&quot;);&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>对应的XML文件为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE suite SYSTEM &quot;http:&#x2F;&#x2F;testng.org&#x2F;testng-1.0.dtd&quot; &gt;</span><br><span class="line">&lt;suite name&#x3D;&quot;testMethod&quot;&gt;</span><br><span class="line">    &lt;test name&#x3D;&quot;annotationTest1&quot;&gt;</span><br><span class="line">        &lt;classes&gt;</span><br><span class="line">            &lt;class name&#x3D;&quot;org.example.annotation.AnnotationMethod&quot;&gt;</span><br><span class="line">                &lt;methods&gt;</span><br><span class="line">                &lt;&#x2F;methods&gt;</span><br><span class="line">            &lt;&#x2F;class&gt;</span><br><span class="line">        &lt;&#x2F;classes&gt;</span><br><span class="line">    &lt;&#x2F;test&gt;</span><br><span class="line">&lt;&#x2F;suite&gt;</span><br></pre></td></tr></table></figure>
+<p>运行结果：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">BeforeMethod运行</span><br><span class="line">test1运行</span><br><span class="line">AfterMethod运行</span><br><span class="line"></span><br><span class="line">BeforeMethod运行</span><br><span class="line">test2运行</span><br><span class="line">AfterMethod运行</span><br><span class="line"></span><br><span class="line">BeforeMethod运行</span><br><span class="line">test3运行</span><br><span class="line">AfterMethod运行</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>@BeforeGroups：</strong> 在调用属于该组的第一个测试方法之前运行<br><strong>@AfterGroups：</strong> 在调用属于该组的最后一个测试方法执行之后运行<br>例子：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public class AnnotationGroups &#123;</span><br><span class="line"></span><br><span class="line">    @Test(groups &#x3D; &#123; &quot;group1&quot;, &quot;group2&quot; &#125;)</span><br><span class="line">    public void test1() &#123;System.out.println(&quot;test1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test(groups &#x3D; &#123;&quot;group1&quot;, &quot;group2&quot;&#125; )</span><br><span class="line">    public void test2() &#123;System.out.println(&quot;test2&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test(groups &#x3D; &#123; &quot;group1&quot; &#125;)</span><br><span class="line">    public void test3() &#123;System.out.println(&quot;test3&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @BeforeGroups(&quot;group1&quot;)</span><br><span class="line">    public void beforeGroups()&#123;System.out.println(&quot;BeforeGroups&quot;);&#125;</span><br><span class="line"></span><br><span class="line">    @AfterGroups(&quot;group2&quot;)</span><br><span class="line">    public void afterGroups()&#123;System.out.println(&quot;AfterGroups&quot;);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  
+
+<p>对应的XML文件为：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE suite SYSTEM &quot;http:&#x2F;&#x2F;testng.org&#x2F;testng-1.0.dtd&quot; &gt;</span><br><span class="line">&lt;suite name&#x3D;&quot;testGroup&quot;&gt;</span><br><span class="line">    &lt;test name&#x3D;&quot;group&quot;&gt;</span><br><span class="line">        &lt;groups&gt;</span><br><span class="line">            &lt;run&gt;</span><br><span class="line">                &lt;include name&#x3D;&quot;group1&quot; &#x2F;&gt;</span><br><span class="line">                &lt;include name&#x3D;&quot;group2&quot; &#x2F;&gt;</span><br><span class="line">            &lt;&#x2F;run&gt;</span><br><span class="line">        &lt;&#x2F;groups&gt;</span><br><span class="line">        &lt;classes&gt;</span><br><span class="line">            &lt;class name&#x3D;&quot;org.example.annotation.AnnotationGroups&quot;&gt;</span><br><span class="line">            &lt;&#x2F;class&gt;</span><br><span class="line">        &lt;&#x2F;classes&gt;</span><br><span class="line">    &lt;&#x2F;test&gt;</span><br><span class="line">&lt;&#x2F;suite&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>  
+<p>运行结果：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">BeforeGroups</span><br><span class="line">test1</span><br><span class="line">test2</span><br><span class="line">AfterGroups</span><br><span class="line"></span><br><span class="line">test3</span><br></pre></td></tr></table></figure>
+
+
+<p><strong>@Parameters：</strong> 描述如何将参数传递给@Test方法。<br>例子：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class testParameter &#123;</span><br><span class="line">    @Test</span><br><span class="line">    @Parameters(value &#x3D; &quot;str1&quot;)</span><br><span class="line">    public void test1(String str)&#123;System.out.println(str);&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对应的XML文件为： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE suite SYSTEM &quot;http:&#x2F;&#x2F;testng.org&#x2F;testng-1.0.dtd&quot; &gt;</span><br><span class="line">&lt;suite name&#x3D;&quot;testParameter&quot;&gt;</span><br><span class="line">    &lt;test name&#x3D;&quot;login&quot;&gt;</span><br><span class="line">        &lt;parameter name&#x3D;&quot;str1&quot; value&#x3D;&quot;通过@test下面的@Paremeter传参数&quot;&gt;&lt;&#x2F;parameter&gt;</span><br><span class="line">        &lt;classes&gt;</span><br><span class="line">            &lt;class name&#x3D;&quot;org.example.parameter.testParameter&quot;&gt;</span><br><span class="line">            &lt;&#x2F;class&gt;</span><br><span class="line">        &lt;&#x2F;classes&gt;</span><br><span class="line">    &lt;&#x2F;test&gt;</span><br><span class="line">&lt;&#x2F;suite&gt;</span><br></pre></td></tr></table></figure>
+<p>运行结果：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">通过@test下面的@Paremeter传参数</span><br></pre></td></tr></table></figure>
+
+<p>当参数类型较为复杂时，上述的传参方法无法满足需要，此时可以利用@DataProvider传参。该方法会返回一个Object二维数组或一个Iterator&lt;Object[]&gt;来提供复杂的参数对象。Object[][]这个二维数组的每一个一维数组代表一个对象。这个一维数组中的元素类型，个数必须和使用这个provider的函数的参数匹配。使用这个Provider的Method会遍历Provider传递过来的每一个对象，每个对象都执行一次方法体内的代码。所以Object[][]第一个参数指定了@Test标识的test method被执行的次数。  </p>
+<p><strong>@DataProvider：</strong> 标记一种方法来提供测试方法的数据。 注释方法必须返回一个Object [] []，其中每个Object []可以被分配给测试方法的参数列表。<br>例子：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class testDataProvider &#123;</span><br><span class="line">    @DataProvider(name &#x3D; &quot;inDp&quot;)</span><br><span class="line">    public Object[][] createData1() &#123;</span><br><span class="line">        return new Object[][] &#123;</span><br><span class="line">                &#123; &quot;通过内部DataProvider传参1&quot;, new Integer(36) &#125;,</span><br><span class="line">                &#123; &quot;通过内部DataProvider传参2&quot;, new Integer(37)&#125;,</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    @Test(dataProvider &#x3D; &quot;inDp&quot;)</span><br><span class="line">    public void test3(String n1, Integer n2) &#123;</span><br><span class="line">        System.out.println(n1 + &quot; &quot; + n2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>   
+
+<p>运行结果：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">通过内部DataProvider传参1 36</span><br><span class="line">通过内部DataProvider传参2 37</span><br></pre></td></tr></table></figure>
+
+<p>如果测试用例和DataProvider不在同一个类中，那么需要将返回参数值的函数标记为static。<br>例子： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class StaticProvider &#123;</span><br><span class="line">    @DataProvider(name &#x3D; &quot;outDp&quot;)</span><br><span class="line">    public static Object[][] createData() &#123;</span><br><span class="line">        return new Object[][] &#123;</span><br><span class="line">                &#123; &quot;通过外部DataProvider传参&quot;, new Integer(&quot;1&quot;) &#125;,</span><br><span class="line">                &#123;&quot;通过外部DataProvider传参&quot;, new Integer(&quot;2&quot;)&#125;,</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">调用过程为：</span><br><span class="line">@Test(dataProvider &#x3D; &quot;outDp&quot;, dataProviderClass &#x3D; StaticProvider.class)</span><br><span class="line">    public void test4(String str1,Integer i)</span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(str1 + &quot; &quot; + i);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>  
+
+<p>运行结果： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">通过外部DataProvider传参 1</span><br><span class="line">通过外部DataProvider传参 2</span><br></pre></td></tr></table></figure> 
+<p>除此之外还可以使用迭代器进行传参数，例子如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> @DataProvider(name &#x3D; &quot;iteratorDataProvider&quot;)</span><br><span class="line">    public Iterator&lt;Object[]&gt; iteratorDataProvider()&#123;</span><br><span class="line">        List&lt;Object[]&gt; objList &#x3D; new ArrayList&lt;Object[]&gt;();</span><br><span class="line">        for(int i &#x3D; 1; i &lt; 5; i++)&#123;</span><br><span class="line">            objList.add(new Object[]&#123;&quot;第&quot; + i  + &quot;名得分&quot;, new Integer(i) ,&quot;哈哈&quot;&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        return objList.iterator();</span><br><span class="line">    &#125;</span><br><span class="line">&#x2F;&#x2F;&#x2F;&#x2F;</span><br><span class="line">    @Test(dataProvider &#x3D; &quot;iteratorDataProvider&quot;)</span><br><span class="line">    public void testDataProvider(String str, Integer i, String str2)&#123;</span><br><span class="line">        System.out.println(str+i+str2);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">第1名得分1哈哈</span><br><span class="line">第2名得分2哈哈</span><br><span class="line">第3名得分3哈哈</span><br><span class="line">第4名得分4哈哈</span><br></pre></td></tr></table></figure>  
+<p>因此使用DataProvider传递参数时，返回的参数个数和类型应与调用这个provider的函数所需要的参数个数和类型完全匹配。</p>
+<p>以上便是TestNGINX常用的一些注解，后面若学习到新的注解会继续补充~</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/TestNG/" rel="tag"><i class="fa fa-tag"></i> TestNG</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/13/%E9%A1%B9%E7%9B%AE%E5%B0%8F%E7%BB%93-2020-4-3/" rel="prev" title="项目小结-2020/4/3">
+      <i class="fa fa-chevron-left"></i> 项目小结-2020/4/3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/21/TestNG%E5%B9%B6%E5%8F%91/" rel="next" title="TestNG并发">
+      TestNG并发 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kingtanna"
+      src="/images/test.jpg">
+  <p class="site-author-name" itemprop="name">Kingtanna</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="sidebar-button motion-element"><i class="fa fa-comment"></i>
+    Chat
+  </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kingtanna</span>
+</div>
+  <!-- <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+-->
+ <!-- <span class="post-meta-divider">|</span> -->
+  <!-- <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+  -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

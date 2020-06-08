@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Mist',
+    version: '7.7.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="最近开始学习GoCD的知识，首先把其中的一些基础概念弄清楚。以下概念是阅读完官方文档后记录下来的，方便自己随时翻阅。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoCD基本概念">
+<meta property="og:url" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="Kingtanna的秘密花园">
+<meta property="og:description" content="最近开始学习GoCD的知识，首先把其中的一些基础概念弄清楚。以下概念是阅读完官方文档后记录下来的，方便自己随时翻阅。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/task.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/Job.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/Stage.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/pipeline.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/material.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/pipleine%20dependency.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/fan%20in.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/fan%20out.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/artifacts.png">
+<meta property="article:published_time" content="2020-05-27T08:25:24.000Z">
+<meta property="article:modified_time" content="2020-06-05T02:10:21.625Z">
+<meta property="article:author" content="Kingtanna">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/task.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>GoCD基本概念 | Kingtanna的秘密花园</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Kingtanna的秘密花园" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Kingtanna的秘密花园</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">欢迎来到我的世界</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/test.jpg">
+      <meta itemprop="name" content="Kingtanna">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kingtanna的秘密花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GoCD基本概念
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-27 16:25:24" itemprop="dateCreated datePublished" datetime="2020-05-27T16:25:24+08:00">2020-05-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-05 10:10:21" itemprop="dateModified" datetime="2020-06-05T10:10:21+08:00">2020-06-05</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近开始学习GoCD的知识，首先把其中的一些基础概念弄清楚。以下概念是阅读完官方文档后记录下来的，方便自己随时翻阅。</p>
+<a id="more"></a>  
+
+<p><strong>1.Task：</strong>任务或者一个构建任务，是一个需要被执行的操作。通常task是一个命令。例如下图中的命令<code>ant -Dmodule=A compile</code>是一个task。<br><img src="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/task.png" width="30%"></p>
+<p><strong>2.Job：</strong>Job通常由多个顺序执行的task组成。如果其中一个task失败了那么这个Job就被视为失败。并且这个Job中剩余的task也不会运行。Job中的每个task都作为独立程序运行，因此，task对其任何环境变量所做的更改都不会影响后续task。task在文件系统上所做的任何更改将对后续task可见。例如下图中，Job包含3个task。<br><img src="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/Job.png" width="30%"></p>
+<p><strong>3.Stage：</strong>Stage由多个独立执行的Job组成，这意味着GoCD确实是并行执行Stage中的Job。 如果一个Job失败了，那么，包含这个Job的Stage也被认为是失败的。但是因为Job之间是独立运行的，所以其他的Job仍然会继续执行直到结束。例如下图中，Stage包含两个Job且这两个Job是并行的。<br><img src="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/Stage.png" width="30%"></p>
+<p><strong>4.Pipeline：</strong>Pipeline是由多个顺序执行的Stages组成。如果其中一个Stage失败，那么就认为这个Pipeline是失败的。接下来的Stage不会被执行。<br><img src="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/pipeline.png"></p>
+<p><strong>5.Materials和triggers：</strong>material会触发Pipeline开始执行。通常它是指源代码仓库。GoCD Server持续轮询配置material当发现新的更改或提交时，相应的Pipeline将运行或“触发”。时间触发器是一种特殊的material，它会在特定的时间里面触发Pipeline。Pipeline甚至可以配置多种material，当任一存储库有新的提交时，都会触发Pipeline开始执行。<br><img src="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/material.png" width="50%"></p>
+<p><strong>6.Pipeline dependency material：</strong>当有多个Pipeline时，且后执行的Pipeline依赖于先执行Pipeline的执行结果，那么先执行的Pipeline称为上游Pipeline，后执行的Pipeline称为下游Pipeline。例如下图中，Pipeline1是上游Pipeline，Pipeline2是下游Pipeline。<br><img src="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/pipleine dependency.png"></p>
+<p><strong>7.Fan-out和fan-in：</strong>如果一个material的执行结束会触发多个下游Pipeline运行，那么这个material会被视为fan-out.相反如果一个下游Pipeline的触发需要多个上游material，那么这个就被视作fan-in。对于fan-in的Pipeline，GOCD会在上游所有所需material执行完毕后才触发。例如下图中的第一个图，Pipeline3需要Pipeline1和Pipeline2完成后才能被触发，那么这种情况是fan in，且假如Pipeline1和Pipeline2的stage不是同时完成，那么Pipeline3要等到最后一个stage成功完成后才会被触发。<br><img src="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/fan in.png" width="70%"><br>下图中，Pipeline1的完成会触发多个下游的Pipeline运行，所以这种情况会被视为fan-out。<br><img src="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/fan out.png" width="70%"></p>
+<p><strong>8.Artifacts：</strong>Artifacts是指文件或者文件夹。Go中的每个Job可以选择是否发布Artifacts，并且GOCD会让发布的Artifacts对用户和其他下游Stages或者Pipeline可见。<br><img src="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/artifacts.png" width="50%"></p>
+<p><strong>9.Agent：</strong>Agent就像是GOCD系统的工人，所有的任务将会在agent上执行。</p>
+<p><strong>10.Resource：</strong>标记agent的标签，标识agent上有哪些资源，用来判断再该agent上是不是可以执行某种任务。</p>
+<p><strong>11.Environments：</strong>GoCD中的Environments是对Pipeline和agent进行分组和隔离的一种方式。</p>
+<ul>
+<li>一个Pipeline最多与一个Environment相关联</li>
+<li>一个agent可以与多个Environment相关联，也可不与Environment相关联</li>
+<li>一个agent只能在与其关联的Environment中拾取属于Pipeline的task。</li>
+<li>与某个Environment关联的agent不能在与任何环境无关联的Pipeline中执行task。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/25/TestNG%E7%9A%84XML%E6%96%87%E4%BB%B6%E5%B0%8F%E7%BB%93/" rel="prev" title="TestNG的XML文件小结">
+      <i class="fa fa-chevron-left"></i> TestNG的XML文件小结
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/28/ZSH%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" rel="next" title="ZSH使用小技巧">
+      ZSH使用小技巧 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kingtanna"
+      src="/images/test.jpg">
+  <p class="site-author-name" itemprop="name">Kingtanna</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="sidebar-button motion-element"><i class="fa fa-comment"></i>
+    Chat
+  </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/yourname" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kingtanna</span>
+</div>
+  <!-- <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+-->
+ <!-- <span class="post-meta-divider">|</span> -->
+  <!-- <div class="theme-info">主题 – <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.0
+  </div>
+  -->
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
