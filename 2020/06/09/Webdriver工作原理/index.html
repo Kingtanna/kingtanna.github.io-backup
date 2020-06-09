@@ -46,15 +46,22 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Kingtanna的秘密花园">
-<meta property="og:url" content="http://yoursite.com/archives/2020/05/index.html">
+  <meta name="description" content="工作以来一直在使用selenium或者说是webdriver进行web UI的测试，基本流程为首先了解需求从而构建测试用例，然后就开始写测试代码，例如给元素定位，写调用函数等。直到昨天，我问自己webdriver究竟是如何来做测试的，或者说它的运行原理是什么。我这才意识到，我每日都在使用的工具，但实际上我并没有真正懂得它的工作原理。所谓知其然但不知其所以然大概就是这种现象吧。心中顿感羞愧，于是赶紧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Webdriver工作原理">
+<meta property="og:url" content="http://yoursite.com/2020/06/09/Webdriver%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Kingtanna的秘密花园">
+<meta property="og:description" content="工作以来一直在使用selenium或者说是webdriver进行web UI的测试，基本流程为首先了解需求从而构建测试用例，然后就开始写测试代码，例如给元素定位，写调用函数等。直到昨天，我问自己webdriver究竟是如何来做测试的，或者说它的运行原理是什么。我这才意识到，我每日都在使用的工具，但实际上我并没有真正懂得它的工作原理。所谓知其然但不知其所以然大概就是这种现象吧。心中顿感羞愧，于是赶紧">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/06/09/Webdriver%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%861.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/09/Webdriver%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%862.png">
+<meta property="article:published_time" content="2020-06-09T02:43:29.000Z">
+<meta property="article:modified_time" content="2020-06-09T06:31:07.886Z">
 <meta property="article:author" content="Kingtanna">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/06/09/Webdriver%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%861.png">
 
-<link rel="canonical" href="http://yoursite.com/archives/2020/05/">
+<link rel="canonical" href="http://yoursite.com/2020/06/09/Webdriver%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
 
 
 <script id="page-configurations">
@@ -62,11 +69,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false
+    isPost: true
   };
 </script>
 
-  <title>归档 | Kingtanna的秘密花园</title>
+  <title>Webdriver工作原理 | Kingtanna的秘密花园</title>
   
 
 
@@ -179,129 +186,87 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 16 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/09/Webdriver%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/test.jpg">
+      <meta itemprop="name" content="Kingtanna">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kingtanna的秘密花园">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Webdriver工作原理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-09 10:43:29 / 修改时间：14:31:07" itemprop="dateCreated datePublished" datetime="2020-06-09T10:43:29+08:00">2020-06-09</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
-    </div>
+        <p>工作以来一直在使用selenium或者说是webdriver进行web UI的测试，基本流程为首先了解需求从而构建测试用例，然后就开始写测试代码，例如给元素定位，写调用函数等。直到昨天，我问自己webdriver究竟是如何来做测试的，或者说它的运行原理是什么。我这才意识到，我每日都在使用的工具，但实际上我并没有真正懂得它的工作原理。所谓知其然但不知其所以然大概就是这种现象吧。心中顿感羞愧，于是赶紧恶补了webdriver的相关底层知识。</p>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-28T17:26:28+08:00"
-              content="2020-05-28">
-          05-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/05/28/ZSH%E4%BD%BF%E7%94%A8%E5%B0%8F%E6%8A%80%E5%B7%A7/" itemprop="url">
-            <span itemprop="name">ZSH使用小技巧</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-27T16:25:24+08:00"
-              content="2020-05-27">
-          05-27
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/05/27/GoCD%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" itemprop="url">
-            <span itemprop="name">GoCD基本概念</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-25T13:46:14+08:00"
-              content="2020-05-25">
-          05-25
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/05/25/TestNG%E7%9A%84XML%E6%96%87%E4%BB%B6%E5%B0%8F%E7%BB%93/" itemprop="url">
-            <span itemprop="name">TestNG的XML文件小结</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-21T13:27:08+08:00"
-              content="2020-05-21">
-          05-21
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/05/21/TestNG%E5%B9%B6%E5%8F%91/" itemprop="url">
-            <span itemprop="name">TestNG并发</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-20T11:30:33+08:00"
-              content="2020-05-20">
-          05-20
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/05/20/TestNG%E5%B8%B8%E8%A7%81%E6%B3%A8%E8%A7%A3/" itemprop="url">
-            <span itemprop="name">TestNG常见注解</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
+<p>在网上看了十几篇相关的介绍后，有一个例子给我留下了深刻的印象，这里我依然想引用这个例子来加强印象和理解。大家都有坐出租车的经验，这个过程一般为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">乘客告诉司机目的地地址</span><br><span class="line">司机操作出租车，例如直行1.3公里，先右拐，再左拐等等</span><br><span class="line">出租车按照指令行驶，最终到达目的地</span><br></pre></td></tr></table></figure>
+<p>在上述这个例子中，乘客为请求发出者，司机为请求解析者，出租车为最终请求执行者。类比到使用webdriver做测试的过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">乘客告诉司机目的地地址  --&gt; 测试代码发出测试请求，其中包括对浏览器的各项操作</span><br><span class="line">司机操作出租车，例如直行1.3公里，先右拐，再左拐等等  --&gt; 浏览器驱动接受并解析请求，将解析的结果发给浏览器</span><br><span class="line">出租车按照指令行驶，最终到达目的地  --&gt;  浏览器执行请求中的各项操作</span><br></pre></td></tr></table></figure>
+<p>对应成图来理解就是：<br><img src="/2020/06/09/Webdriver%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/工作原理1.png">  </p>
+<p>问题来了，假如出租车司机遇到了外国乘客，他很有可能听不懂外国乘客的语言，这样出租车司机就有可能无法完成这一单生意。同样的，不同的项目可能使用不同的语言，那么在写测试用例的时候，webdriver又怎么保证每个语言它都能解析呢？<br>为了回答上述问题首先来看看请求是什么？向浏览器发送请求是基于http协议，这个协议规定了每一个请求的格式，包括http请求头，请求内容，也就是说不论是什么语言，所发出的http请求的格式是一致的。而webdriver是基于JSON Wire Protocol这个协议，该协议会将所有的请求统一处理为json的格式，也就是说编写测试代码的语言也许不一致，但是当测试代码的请求到达webdriver的时候这些请求就被处理成了统一的格式。因此使用webdriver时就与语言解耦了，这个过程可以用下面的图来解释。<br><img src="/2020/06/09/Webdriver%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/工作原理2.png">  </p>
+<p>以上就是webdriver的基本工作原理，通过这次对webdriver原理的追根溯源，我意识到学习知识一定要多问几个为什么。有时候总会以为自己懂了，但实际上根本不懂，又或者所学到的知识都是散落的点，无法从点到面，形成一个系统化的知识框架。</p>
 
     </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/01/TestNG-Appium-GoCD%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA/" rel="prev" title="TestNG+Appium+GoCD自动化测试框架搭建">
+      <i class="fa fa-chevron-left"></i> TestNG+Appium+GoCD自动化测试框架搭建
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
